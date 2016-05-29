@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button0"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#aabb7733"
+        android:text="to ListView Activity Loading NetRes"
+        android:textColor="#ffffffff" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@id/button0"
+        android:background="#aaffbb44"
+        android:text="To ListView Activity Loading LocalRes"
+        android:textColor="#ffffffff" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@id/button1"
+        android:background="#aa44aaff"
+        android:text="Draw Text or Bitmap"
+        android:textColor="#ffffffff" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/button2"
+        android:background="#661111ff">
+
+        <cn.carbs.android.avatarimageview.library.AvatarImageView
+            android:id="@+id/aiv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:aiv_ShowBoarder="true"
+            app:aiv_BoarderWidth="4px" />
+    </FrameLayout>
+
+</RelativeLayout>

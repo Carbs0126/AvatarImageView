@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="AvatarImageView">
+        <attr name="aiv_TextSizeRatio" format="reference|float" />
+        <attr name="aiv_BoarderColor" format="reference|color" />
+        <attr name="aiv_BoarderWidth" format="reference|dimension" />
+        <attr name="aiv_ShowBoarder" format="reference|boolean" />
+    </declare-styleable>
+    
+</resources>

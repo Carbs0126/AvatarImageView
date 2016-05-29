@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/item_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="16dp"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+</LinearLayout>
