@@ -1,14 +1,10 @@
 package cn.carbs.android.avatarimageview.example;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
-import java.io.InputStream;
 
 import cn.carbs.android.avatarimageview.library.AvatarImageView;
 
@@ -58,9 +54,7 @@ public class ActivityViewSingle extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (flag) {
-                    InputStream is = getResources().openRawResource(R.drawable.id_014);
-                    Bitmap mBitmap = BitmapFactory.decodeStream(is);
-                    aiv.setBitmap(mBitmap);
+                    aiv.setImageResource(R.drawable.id_014);
                 } else {
                     aiv.setTextAndColor("卓", AvatarImageView.COLORS[2]);
                 }

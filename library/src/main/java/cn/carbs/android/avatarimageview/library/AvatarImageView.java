@@ -13,6 +13,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -289,7 +290,11 @@ public class AvatarImageView extends ImageView {
 
     @Override
     public void setImageResource(int resId) {
-        setDrawable(getContext().getDrawable(resId));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setDrawable(getContext().getDrawable(resId));
+        }else{
+            setDrawable(getContext().getResources().getDrawable(resId));
+        }
     }
 
     //static function to add image to avatarview, using rxandroid
