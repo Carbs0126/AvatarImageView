@@ -218,13 +218,6 @@ public class AvatarImageView extends ImageView {
 
     private int type = DEFAULT_TYPE_BITMAP;
 
-    boolean clearFlag = false;
-
-    public void clear() {
-        clearFlag = !clearFlag;
-        invalidate();
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
