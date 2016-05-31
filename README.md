@@ -1,6 +1,4 @@
 # AvatarImageView
-an AvatarImageView on Android platform which can display circle text or circle image
-
 
 #前言：
 在做电话本或者其他应用时，显示联系人头像的策略一般是这样的：先判断是否有头像图片，如果有，则直接显示图片；如果没有，则显示联系人的名字的第一个字，将这个文字作为头像，并添加背景颜色。
@@ -61,3 +59,61 @@ aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgrou
                 .into(aiv);
 ```
 
+---------------------
+#English
+
+##Abstract
+AvatarImageView on Android platform can display circle text or circle image
+
+##Screenshot
+<center>
+![load local image resources](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg)
+</center>
+<center>
+![load net image resources](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg)
+</center>
+<center>
+![add boarder](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg)
+</center>
+<center>
+![add boarder](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg)
+</center>
+
+##Main features:
+1. show circle image(including bitmap and drawable);
+2. show circle text(can generate a colorful background for text);
+3. the textsize can be modified according to the ratio of AvatarImageView's width;
+4. can add a circle boarder for text or image, and the boarder can be adjusted in stroke width or color;
+5. the image or text is aways in the center; the rule is : if the image's width is larger than height, then get the center square of the image, with the same length side of image's width. vice versa.
+6. since AvatarImageView extends from ImageView, and remove super.onDraw(), and override setImageResoure() setImageDrawable(), then we can use Glide or other famouse Loading Image Libary to load image into AvatarImageView conveniently.
+7. surpport padding;
+
+##Attention
+not support wrap_content pattern temporarily
+
+##How to use it:
+(1)How to set image or text
+```
+AvatarImageView aiv = (AvatarImageView) this.findViewById(R.id.aiv);
+//set image：
+aiv.setImageResource(R.drawable.id_014);
+//or：
+aiv.setDrawable(drawable);
+//or：
+aiv.setBitmap(bitmap);
+//or：
+aiv.setImageDrawable(drawable);
+//set text:
+aiv.setTextAndColor("Android", AvatarImageView.COLORS[0]);//set backgroundcolor directly
+//or
+aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as the backgroundcolor seed
+```
+(2)use with Glide:
+```
+            Glide
+                .with(activity)
+                .load(picurl)
+                .centerCrop()
+                .crossFade()
+                .into(aiv);
+```
