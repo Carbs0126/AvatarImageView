@@ -15,6 +15,9 @@ an AvatarImageView on Android platform which can display circle text or circle i
 <center>
 ![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg)
 </center>
+<center>
+![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg)
+</center>
 
 ##主要功能：
 1. 显示圆形图像；
