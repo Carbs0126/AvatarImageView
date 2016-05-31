@@ -10,7 +10,7 @@ an AvatarImageView on Android platform which can display circle text or circle i
 ![本地图片加载与显示](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg)
 </center>
 <center>
-![网络图片加载与显示](http://https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg)
+![网络图片加载与显示](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg)
 </center>
 <center>
 ![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg)
