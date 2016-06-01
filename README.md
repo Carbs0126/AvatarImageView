@@ -17,6 +17,11 @@
 ![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg)
 </center>
 
+##添加至工程
+```
+compile 'cn.carbs.android:AvatarImageView:1.0.0'
+```
+
 ##主要功能：
 1. 显示圆形图像；
 2. 显示圆形文字；
@@ -57,6 +62,10 @@ aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgrou
                 .centerCrop()
                 .crossFade()
                 .into(aiv);
+```
+##添加至工程
+```
+compile 'cn.carbs.android:AvatarImageView:1.0.0'
 ```
 
 ---------------------
@@ -116,4 +125,9 @@ aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as th
                 .centerCrop()
                 .crossFade()
                 .into(aiv);
+```
+
+##add to your project
+```
+compile 'cn.carbs.android:AvatarImageView:1.0.0'
 ```
