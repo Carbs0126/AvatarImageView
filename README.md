@@ -64,8 +64,17 @@ aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgrou
                 .into(aiv);
 ```
 ##添加至工程
+1.添加依赖
 ```
 compile 'cn.carbs.android:AvatarImageView:1.0.1'
+```
+2.layout文件中添加此view
+```
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/item_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="5dp" />
 ```
 
 ---------------------
@@ -128,6 +137,15 @@ aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as th
 ```
 
 ##add to your project
+1.add dependence
 ```
 compile 'cn.carbs.android:AvatarImageView:1.0.1'
+```
+2.add into xml layout file
+```
+    <cn.carbs.android.avatarimageview.library.AvatarImageView
+        android:id="@+id/item_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="5dp" />
 ```
