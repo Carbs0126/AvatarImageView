@@ -19,7 +19,7 @@
 
 ##添加至工程
 ```
-compile 'cn.carbs.android:AvatarImageView:1.0.0'
+compile 'cn.carbs.android:AvatarImageView:1.0.1'
 ```
 
 ##主要功能：
@@ -65,7 +65,7 @@ aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgrou
 ```
 ##添加至工程
 ```
-compile 'cn.carbs.android:AvatarImageView:1.0.0'
+compile 'cn.carbs.android:AvatarImageView:1.0.1'
 ```
 
 ---------------------
@@ -129,5 +129,5 @@ aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as th
 
 ##add to your project
 ```
-compile 'cn.carbs.android:AvatarImageView:1.0.0'
+compile 'cn.carbs.android:AvatarImageView:1.0.1'
 ```
