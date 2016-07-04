@@ -8,16 +8,16 @@
 ##截图：
 <center>
 ![本地图片加载与显示](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg)
-</center>
+</center> 
 <center>
 ![网络图片加载与显示](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg)
-</center>
+</center> 
 <center>
 ![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg)
-</center>
+</center> 
 <center>
 ![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg)
-</center>
+</center> 
 
 ##添加至工程
 ```
@@ -79,6 +79,8 @@ compile 'cn.carbs.android:AvatarImageView:1.0.1'
         android:padding="5dp" />
 ```
 
+##感谢
+####[CircleImageView](https://github.com/hdodenhof/CircleImageView) 
 ---------------------
 #English
 
@@ -152,6 +154,8 @@ compile 'cn.carbs.android:AvatarImageView:1.0.1'
         android:padding="5dp" />
 ```
 
+##Thanks
+####[CircleImageView](https://github.com/hdodenhof/CircleImageView)
 
 ## License
 
