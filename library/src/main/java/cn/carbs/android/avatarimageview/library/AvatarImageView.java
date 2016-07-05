@@ -273,7 +273,7 @@ public class AvatarImageView extends ImageView {
         if (TextUtils.isEmpty(seed)) {
             return COLORS[0];
         }
-        return COLORS[Math.abs(seed.hashCode()) % COLORS_NUMBER];
+        return COLORS[Math.abs(seed.hashCode() % COLORS_NUMBER)];
     }
 
     @Override
