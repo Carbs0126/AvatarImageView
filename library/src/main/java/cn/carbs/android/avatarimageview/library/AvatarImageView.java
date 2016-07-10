@@ -9,7 +9,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Shader.TileMode;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -34,26 +34,41 @@ public class AvatarImageView extends ImageView {
                                         0xff44aaff};
 
     private static final int COLORS_NUMBER = COLORS.length;
-
-    private static final float DEFAULT_TEXT_SIZE_RATIO = 0.4f;
+    private static final int DEFAULT_TEXT_COLOR = 0xffffffff;
     private static final int DEFAULT_BOARDER_COLOR = 0xffffffff;
     private static final int DEFAULT_BOARDER_WIDTH = 4;
-
     private static final int DEFAULT_TYPE_BITMAP = 0;
     private static final int DEFAULT_TYPE_TEXT = 1;
+    private static final String DEFAULT_TEXT = "";
+    private static final int COLORDRAWABLE_DIMENSION = 1;
+    private static final float DEFAULT_TEXT_SIZE_RATIO = 0.4f;
+    private static final float DEFAULT_TEXT_MASK_RATIO = 0.8f;
+    private static final boolean DEFAULT_BOARDER_SHOW = false;
+    private static final Bitmap.Config BITMAP_CONFIG_8888 = Bitmap.Config.ARGB_8888;
+    private static final Bitmap.Config BITMAP_CONFIG_4444 = Bitmap.Config.ARGB_4444;
 
-    private String text;
-    private int colorBg = COLORS[0];
-    private float textSizeRatio = DEFAULT_TEXT_SIZE_RATIO;
-    private int boarderColor = DEFAULT_BOARDER_COLOR;
-    private float boarderWidth = DEFAULT_BOARDER_WIDTH;
-    private boolean showBoarder = false;
+    private int mRadius;//the circle's radius
+    private int mCenterX;
+    private int mCenterY;
+    private int mType = DEFAULT_TYPE_BITMAP;
+    private int mBgColor = COLORS[0];//background color when show text
+    private int mTextColor = DEFAULT_TEXT_COLOR;
+    private int mBoarderColor = DEFAULT_BOARDER_COLOR;
+    private int mBoarderWidth = DEFAULT_BOARDER_WIDTH;
+    private float mTextSizeRatio = DEFAULT_TEXT_SIZE_RATIO;//the text size divides (2 * mRadius)
+    private float mTextMaskRatio = DEFAULT_TEXT_MASK_RATIO;//the inner-radius text divides outer-radius text
+    private boolean mShowBoarder = DEFAULT_BOARDER_SHOW;
+    private String mText = DEFAULT_TEXT;
 
-    private Paint paintTextForeground;
-    private Paint paintTextBackground;
-    private Paint paintDraw;
-    private Paint paintCircle;
-    private Paint.FontMetrics fontMetrics;
+    private Paint mPaintTextForeground;//draw text, in text mode
+    private Paint mPaintTextBackground;//draw circle, in text mode
+    private Paint mPaintDraw;//draw bitmap, int bitmap mode
+    private Paint mPaintCircle;//draw boarder
+    private Paint.FontMetrics mFontMetrics;
+
+    private Bitmap mBitmap;//the pic
+    private BitmapShader mBitmapShader;//used to adjust position of bitmap
+    private Matrix mMatrix;//used to adjust position of bitmap
 
     public AvatarImageView(Context context) {
         super(context);
@@ -84,13 +99,17 @@ public class AvatarImageView extends ImageView {
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.AvatarImageView_aiv_TextSizeRatio) {
-                textSizeRatio = a.getFloat(attr, DEFAULT_TEXT_SIZE_RATIO);
+                mTextSizeRatio = a.getFloat(attr, DEFAULT_TEXT_SIZE_RATIO);
+            }else if (attr == R.styleable.AvatarImageView_aiv_TextMaskRatio){
+                mTextMaskRatio = a.getFloat(attr, DEFAULT_TEXT_MASK_RATIO);
             }else if (attr == R.styleable.AvatarImageView_aiv_BoarderWidth) {
-                boarderWidth = a.getDimensionPixelSize(attr, DEFAULT_BOARDER_WIDTH);
+                mBoarderWidth = a.getDimensionPixelSize(attr, DEFAULT_BOARDER_WIDTH);
             }else if (attr == R.styleable.AvatarImageView_aiv_BoarderColor) {
-                boarderColor = a.getColor(attr, DEFAULT_BOARDER_COLOR);
+                mBoarderColor = a.getColor(attr, DEFAULT_BOARDER_COLOR);
+            }else if (attr == R.styleable.AvatarImageView_aiv_TextColor) {
+                mTextColor = a.getColor(attr, DEFAULT_TEXT_COLOR);
             }else if (attr == R.styleable.AvatarImageView_aiv_ShowBoarder){
-                showBoarder = a.getBoolean(attr, false);
+                mShowBoarder = a.getBoolean(attr, DEFAULT_BOARDER_SHOW);
             }
         }
         a.recycle();
@@ -99,30 +118,25 @@ public class AvatarImageView extends ImageView {
     private void init() {
         mMatrix = new Matrix();
 
-        paintTextForeground = new Paint();
-        paintTextForeground.setColor(0xffffffff);
-        paintTextForeground.setAntiAlias(true);
-        paintTextForeground.setTextAlign(Paint.Align.CENTER);
+        mPaintTextForeground = new Paint();
+        mPaintTextForeground.setColor(mTextColor);
+        mPaintTextForeground.setAntiAlias(true);
+        mPaintTextForeground.setTextAlign(Paint.Align.CENTER);
 
-        paintTextBackground = new Paint();
-        paintTextBackground.setColor(colorBg);
-        paintTextBackground.setAntiAlias(true);
-        paintTextBackground.setStyle(Paint.Style.FILL);
+        mPaintTextBackground = new Paint();
+        mPaintTextBackground.setAntiAlias(true);
+        mPaintTextBackground.setStyle(Paint.Style.FILL);
 
-        paintDraw = new Paint();
-        paintDraw.setAntiAlias(true);
-        paintDraw.setStyle(Paint.Style.FILL);
+        mPaintDraw = new Paint();
+        mPaintDraw.setAntiAlias(true);
+        mPaintDraw.setStyle(Paint.Style.FILL);
 
-        paintCircle = new Paint();
-        paintCircle.setAntiAlias(true);
-        paintCircle.setStyle(Paint.Style.STROKE);
-        paintCircle.setColor(boarderColor);
-        paintCircle.setStrokeWidth(boarderWidth);
+        mPaintCircle = new Paint();
+        mPaintCircle.setAntiAlias(true);
+        mPaintCircle.setStyle(Paint.Style.STROKE);
+        mPaintCircle.setColor(mBoarderColor);
+        mPaintCircle.setStrokeWidth(mBoarderWidth);
     }
-
-    private int radius;
-    private int centerX;
-    private int centerY;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -132,34 +146,40 @@ public class AvatarImageView extends ImageView {
         int contentWidth = w - paddingLeft - getPaddingRight();
         int contentHeight = h - paddingTop - getPaddingBottom();
 
-        radius = contentWidth < contentHeight ? contentWidth / 2 : contentHeight / 2;
-        centerX = paddingLeft + radius;
-        centerY = paddingTop + radius;
+        mRadius = contentWidth < contentHeight ? contentWidth / 2 : contentHeight / 2;
+        mCenterX = paddingLeft + mRadius;
+        mCenterY = paddingTop + mRadius;
         refreshTextSizeConfig();
     }
 
     private void refreshTextSizeConfig() {
-        paintTextForeground.setTextSize(textSizeRatio * 2 * radius);
-        fontMetrics = paintTextForeground.getFontMetrics();
+        mPaintTextForeground.setTextSize(mTextSizeRatio * 2 * mRadius);
+        mFontMetrics = mPaintTextForeground.getFontMetrics();
     }
 
-    public void setTextAndColor(String text, int colorBg) {
-        if (this.type != DEFAULT_TYPE_TEXT || !stringEqual(text, this.text) || colorBg != this.colorBg) {
-            this.text = text;
-            this.colorBg = colorBg;
-            this.type = DEFAULT_TYPE_TEXT;
+    private void refreshTextConfig(){
+        if(mBgColor != mPaintTextBackground.getColor()) {
+            mPaintTextBackground.setColor(mBgColor);
+        }
+        if(mTextColor != mPaintTextForeground.getColor()) {
+            mPaintTextForeground.setColor(mTextColor);
+        }
+    }
+
+    public void setTextAndColor(String text, int bgColor) {
+        if (this.mType != DEFAULT_TYPE_TEXT || !stringEqual(text, this.mText) || bgColor != this.mBgColor) {
+            this.mText = text;
+            this.mBgColor = bgColor;
+            this.mType = DEFAULT_TYPE_TEXT;
             invalidate();
         }
     }
 
-    private boolean stringEqual(String a, String b){
-        if(a == null){
-            return (b == null);
-        }else{
-            if(b == null){
-                return false;
-            }
-            return a.equals(b);
+    public void setTextColor(int textColor){
+        if(this.mTextColor != textColor) {
+            mTextColor = textColor;
+            mPaintTextForeground.setColor(mTextColor);
+            invalidate();
         }
     }
 
@@ -167,15 +187,13 @@ public class AvatarImageView extends ImageView {
         setTextAndColor(text, getColorBySeed(colorSeed));
     }
 
-    private Bitmap bitmap;
-
     public void setBitmap(Bitmap bitmap) {
         if (bitmap == null) {
             return;
         }
-        if (this.type != DEFAULT_TYPE_BITMAP || bitmap != this.bitmap) {
-            this.bitmap = bitmap;
-            this.type = DEFAULT_TYPE_BITMAP;
+        if (this.mType != DEFAULT_TYPE_BITMAP || bitmap != this.mBitmap) {
+            this.mBitmap = bitmap;
+            this.mType = DEFAULT_TYPE_BITMAP;
             invalidate();
         }
     }
@@ -185,27 +203,20 @@ public class AvatarImageView extends ImageView {
         setBitmap(bitmap);
     }
 
-    private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-    private static final int COLORDRAWABLE_DIMENSION = 1;
-
     private Bitmap getBitmapFromDrawable(Drawable drawable) {
         if (drawable == null) {
             return null;
         }
-
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
         }
-
         try {
             Bitmap bitmap;
-
             if (drawable instanceof ColorDrawable) {
-                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
+                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG_8888);
             } else {
-                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), BITMAP_CONFIG_8888);
             }
-
             Canvas canvas = new Canvas(bitmap);
             drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
             drawable.draw(canvas);
@@ -216,57 +227,87 @@ public class AvatarImageView extends ImageView {
         }
     }
 
-    private int type = DEFAULT_TYPE_BITMAP;
-
     @Override
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
-        if (bitmap != null && type == DEFAULT_TYPE_BITMAP) {
-            drawBitmap(canvas);
-        } else if (text != null && type == DEFAULT_TYPE_TEXT) {
-            drawText(canvas);
+        if (mBitmap != null && mType == DEFAULT_TYPE_BITMAP) {
+            toDrawBitmap(canvas);
+//            drawBitmap(canvas);
+        } else if (mText != null && mType == DEFAULT_TYPE_TEXT) {
+            toDrawText(canvas);
+//            drawText(canvas);
         }
-        if(showBoarder){
+        if(mShowBoarder){
             drawBoarder(canvas);
         }
     }
 
-    private BitmapShader mBitmapShader;
-    private Matrix mMatrix;
-    private int bitmapWidth;
-    private int bitmapHeight;
+    private void toDrawText(Canvas canvas){
+        if(mText.length() == 1) {
+            drawText(canvas);//draw text to the view's canvas directly
+        }else{//draw text with clip effect, need to create a bitmap
+            drawBitmap(canvas, createClipTextBitmap((int) (mRadius / mTextMaskRatio)), false);
+        }
+    }
 
-    private void drawBitmap(Canvas canvas) {
+    private void toDrawBitmap(Canvas canvas) {
+        if(mBitmap == null) return;
+        drawBitmap(canvas, mBitmap, true);
+    }
 
-        bitmapWidth = bitmap.getWidth();
-        bitmapHeight = bitmap.getHeight();
+    private void drawBitmap(Canvas canvas, Bitmap bitmap, boolean adjustScale){
+        refreshBitmapShaderConfig(bitmap, adjustScale);
+        mPaintDraw.setShader(mBitmapShader);
+        canvas.drawCircle(mCenterX, mCenterY, mRadius, mPaintDraw);
+    }
 
-        int bSize = Math.min(bitmapWidth, bitmapHeight);
-        float scale = radius * 2.0f / bSize;
+    private void refreshBitmapShaderConfig(Bitmap bitmap, boolean adjustScale){
+        mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mMatrix.reset();
-        mMatrix.setScale(scale, scale);
-        if (bitmapWidth > bitmapHeight) {
-            mMatrix.postTranslate(-(bitmapWidth * scale / 2 - radius - getPaddingLeft()), getPaddingTop());
-        } else {
-            mMatrix.postTranslate(getPaddingLeft(), -(bitmapHeight * scale / 2 - radius - getPaddingTop()));
+        int bitmapWidth = bitmap.getWidth();
+        int bitmapHeight = bitmap.getHeight();
+        if(adjustScale) {
+            int bSize = Math.min(bitmapWidth, bitmapHeight);
+            float scale = mRadius * 2.0f / bSize;//TODO
+            mMatrix.setScale(scale, scale);
+            if (bitmapWidth > bitmapHeight) {
+                mMatrix.postTranslate(-(bitmapWidth * scale / 2 - mRadius - getPaddingLeft()), getPaddingTop());
+            } else {
+                mMatrix.postTranslate(getPaddingLeft(), -(bitmapHeight * scale / 2 - mRadius - getPaddingTop()));
+            }
+        }else{
+            mMatrix.postTranslate(-(bitmapWidth * 1 / 2 - mRadius - getPaddingLeft()), -(bitmapHeight * 1 / 2 - mRadius - getPaddingTop()));
         }
 
-        mBitmapShader = new BitmapShader(bitmap, TileMode.CLAMP, TileMode.CLAMP);
         mBitmapShader.setLocalMatrix(mMatrix);
+    }
 
-        paintDraw.setShader(mBitmapShader);
-        canvas.drawCircle(centerX, centerY, radius, paintDraw);
+    private Bitmap createClipTextBitmap(int bitmapRadius){
+        Bitmap bitmapClipText = Bitmap.createBitmap(bitmapRadius * 2, bitmapRadius *2, BITMAP_CONFIG_4444);
+        Canvas canvasClipText = new Canvas(bitmapClipText);
+        Paint paintClipText = new Paint();
+        paintClipText.setStyle(Paint.Style.FILL);
+        paintClipText.setAntiAlias(true);
+        paintClipText.setColor(mBgColor);
+        canvasClipText.drawCircle(bitmapRadius, bitmapRadius, bitmapRadius, paintClipText);
 
+        paintClipText.setTextSize(mTextSizeRatio * mRadius * 2);
+        paintClipText.setColor(mTextColor);
+        paintClipText.setTextAlign(Paint.Align.CENTER);
+        Paint.FontMetrics fontMetrics = paintClipText.getFontMetrics();
+        canvasClipText.drawText(mText, 0, mText.length(), bitmapRadius,
+                bitmapRadius + Math.abs(fontMetrics.top + fontMetrics.bottom) / 2, paintClipText);
+        return bitmapClipText;
     }
 
     private void drawText(Canvas canvas) {
-        paintTextBackground.setColor(colorBg);
-        canvas.drawCircle(centerX, centerY, radius, paintTextBackground);
-        canvas.drawText(text, 0, text.length(), centerX, centerY + Math.abs(fontMetrics.top + fontMetrics.bottom) / 2, paintTextForeground);
+        refreshTextConfig();
+        canvas.drawCircle(mCenterX, mCenterY, mRadius, mPaintTextBackground);
+        canvas.drawText(mText, 0, mText.length(), mCenterX, mCenterY + Math.abs(mFontMetrics.top + mFontMetrics.bottom) / 2, mPaintTextForeground);
     }
 
     private void drawBoarder(Canvas canvas){
-        canvas.drawCircle(centerX, centerY, radius - boarderWidth/2, paintCircle);
+        canvas.drawCircle(mCenterX, mCenterY, mRadius - mBoarderWidth /2, mPaintCircle);
     }
 
     public int getColorBySeed(String seed) {
@@ -296,6 +337,7 @@ public class AvatarImageView extends ImageView {
                                         final LruCache<String, Bitmap> cache,
                                         final String cacheKey,
                                         final String localImagePath,
+                                        final String text,
                                         final String textSeed) {
 
         avatarImageView.setTag(uniqueIdentifierTag);
@@ -340,10 +382,10 @@ public class AvatarImageView extends ImageView {
                             if ((uniqueIdentifierTag == null && avatarImageView.getTag() == null)
                                     || (uniqueIdentifierTag != null && uniqueIdentifierTag.equals(avatarImageView.getTag()))) {
                                 if (b == null) {
-                                    if (textSeed == null || TextUtils.isEmpty(textSeed.trim())) {
+                                    if (text == null || TextUtils.isEmpty(text.trim())) {
                                         avatarImageView.setTextAndColorSeed(" ", " ");
                                     } else {
-                                        avatarImageView.setTextAndColorSeed(textSeed.trim().substring(0, 1), textSeed);
+                                        avatarImageView.setTextAndColorSeed(text, textSeed);
                                     }
                                 } else {
                                     avatarImageView.setBitmap(b);
@@ -352,7 +394,16 @@ public class AvatarImageView extends ImageView {
                         }
                     });
         }
-
     }
 
+    private boolean stringEqual(String a, String b){
+        if(a == null){
+            return (b == null);
+        }else{
+            if(b == null){
+                return false;
+            }
+            return a.equals(b);
+        }
+    }
 }

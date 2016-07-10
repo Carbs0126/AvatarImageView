@@ -93,7 +93,7 @@ public class ActivityViewListLocal extends AppCompatActivity {
 			if(aiv == null){
 				return;
 			}
-			AvatarImageView.updateAvatarView(aiv, hero, null, null, hero.file, hero.realName);
+			AvatarImageView.updateAvatarView(aiv, hero, null, null, hero.file, hero.realName, hero.realName);
 		}
 	}
 

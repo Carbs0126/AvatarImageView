@@ -10,6 +10,7 @@
         android:layout_alignParentBottom="true"
         android:background="#aabb7733"
         android:text="to ListView Activity Loading NetRes"
+        android:textAllCaps="false"
         android:textColor="#ffffffff" />
 
     <Button
@@ -19,6 +20,7 @@
         android:layout_above="@id/button0"
         android:background="#aaffbb44"
         android:text="To ListView Activity Loading LocalRes"
+        android:textAllCaps="false"
         android:textColor="#ffffffff" />
 
     <Button
@@ -28,21 +30,39 @@
         android:layout_above="@id/button1"
         android:background="#aa44aaff"
         android:text="Draw Text or Bitmap"
+        android:textAllCaps="false"
         android:textColor="#ffffffff" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/button2"
         android:background="#661111ff">
 
-        <cn.carbs.android.avatarimageview.library.AvatarImageView
-            android:id="@+id/aiv"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:aiv_ShowBoarder="true"
-            app:aiv_BoarderWidth="4px" />
-    </FrameLayout>
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/aiv_left"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="false"
+                app:aiv_TextSizeRatio="0.4" />
+
+            <cn.carbs.android.avatarimageview.library.AvatarImageView
+                android:id="@+id/aiv_right"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                app:aiv_BoarderWidth="2dp"
+                app:aiv_ShowBoarder="true"
+                app:aiv_TextSizeRatio="0.7" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
