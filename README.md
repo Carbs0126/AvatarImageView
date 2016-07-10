@@ -1,27 +1,30 @@
 # AvatarImageView
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AvatarImageView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3820)
+![Android Arsenal][1]
 * [English](#english)
 
 #前言：
-在做电话本或者其他应用时，显示联系人头像的策略一般是这样的：先判断是否有头像图片，如果有，则直接显示图片；如果没有，则显示联系人的名字的第一个字，将这个文字作为头像，并添加背景颜色。
+在做电话本或者其他应用时，显示联系人头像的策略一般是这样的：先判断是否有头像图片，如果有，则直接显示图片；如果没有，则显示联系人的名字的第一个字，将这个文字作为头像，并添加背景颜色。如果设置的文字的长度大于1，则具有clip效果，即超出圆形的部分将被clip掉。
 
 ##截图：
 <center>
-![本地图片加载与显示](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg)
+![1.0.2添加clip文字效果][2]
+</center>
+<center>
+![本地图片加载与显示][3]
 </center> 
 <center>
-![网络图片加载与显示](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg)
+![网络图片加载与显示][4]
 </center> 
 <center>
-![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg)
+![可添加边框][5]
 </center> 
 <center>
-![可添加边框](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg)
+![可添加边框][6]
 </center> 
 
 ##添加至工程
 ```
-compile 'cn.carbs.android:AvatarImageView:1.0.1'
+compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 
 ##主要功能：
@@ -32,6 +35,8 @@ compile 'cn.carbs.android:AvatarImageView:1.0.1'
 5. 图片、文字的显示始终是居中的；其中图片的居中规则是：如果图片宽大于高，那么截取以高为正方形的中间部分。如果图片高大于宽，那么截取以宽为正方形的中间部分；
 6. 由于是继承于ImageView，且在onDraw()时去掉了super.onDraw()，并覆写了设置drawable的函数，因此可以直接将此view赋值给类似Glide等第三方的库，使其直接加载图片，且图片为圆形（不需要做调整）;
 7. 支持padding；
+8. 多个文字显示具有clip效果
+9. 可以自定义clip放大比例，使用maskratio来调节文字放大的比例
 
 ##注意事项：
 暂时不支持wrap_content模式
@@ -52,7 +57,7 @@ aiv.setBitmap(bitmap);
 //或者：
 aiv.setImageDrawable(drawable);
 //设置文字：
-aiv.setTextAndColor("安", AvatarImageView.COLORS[0]);//直接设置颜色
+aiv.setTextAndColor("安", AvatarImageView.COLORS[0]);//直接设置颜色，如果设置的文字为多个字符，则会具有clip效果，单个字符没有clip效果
 //或者：
 aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgroundcolor的seed
 ```
@@ -68,7 +73,7 @@ aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgrou
 ##添加至工程
 1.添加依赖
 ```
-compile 'cn.carbs.android:AvatarImageView:1.0.1'
+compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 2.layout文件中添加此view
 ```
@@ -76,11 +81,14 @@ compile 'cn.carbs.android:AvatarImageView:1.0.1'
         android:id="@+id/item_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:padding="5dp" />
+        android:padding="5dp"
+        app:aiv_BoarderWidth="2dp"//边框宽度
+        app:aiv_ShowBoarder="false"//是否显示边框
+        app:aiv_TextSizeRatio="0.4"/>//文字大小与原型直径大小的比例
 ```
 
 ##感谢
-####[CircleImageView](https://github.com/hdodenhof/CircleImageView) 
+####[CircleImageView][7]
 ---------------------
 #English
 
@@ -89,16 +97,19 @@ AvatarImageView on Android platform can display circle text or circle image
 
 ##Screenshot
 <center>
-![load local image resources](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg)
+![load local image resources][2]
 </center>
 <center>
-![load net image resources](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg)
+![load local image resources][3]
 </center>
 <center>
-![add boarder](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg)
+![load net image resources][4]
 </center>
 <center>
-![add boarder](https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg)
+![add boarder][5]
+</center>
+<center>
+![add boarder][6]
 </center>
 
 ##Main features:
@@ -109,6 +120,8 @@ AvatarImageView on Android platform can display circle text or circle image
 5. the image or text is aways in the center; the rule is : if the image's width is larger than height, then get the center square of the image, with the same length side of image's width. vice versa.
 6. since AvatarImageView extends from ImageView, and remove super.onDraw(), and override setImageResoure() setImageDrawable(), then we can use Glide or other famouse Loading Image Libary to load image into AvatarImageView conveniently.
 7. surpport padding;
+8. have clip effect if the text's length > 1
+9. can set the clip effect's amplify ratio by setting mask ratio
 
 ##Attention
 not support wrap_content pattern temporarily
@@ -126,7 +139,7 @@ aiv.setBitmap(bitmap);
 //or：
 aiv.setImageDrawable(drawable);
 //set text:
-aiv.setTextAndColor("Android", AvatarImageView.COLORS[0]);//set backgroundcolor directly
+aiv.setTextAndColor("Android", AvatarImageView.COLORS[0]);//set backgroundcolor directly, if the text's length > 1, will have clip effect
 //or
 aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as the backgroundcolor seed
 ```
@@ -143,7 +156,7 @@ aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as th
 ##add to your project
 1.add dependence
 ```
-compile 'cn.carbs.android:AvatarImageView:1.0.1'
+compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 2.add into xml layout file
 ```
@@ -151,11 +164,14 @@ compile 'cn.carbs.android:AvatarImageView:1.0.1'
         android:id="@+id/item_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:padding="5dp" />
+        android:padding="5dp"
+        app:aiv_BoarderWidth="2dp"//
+        app:aiv_ShowBoarder="false"//
+        app:aiv_TextSizeRatio="0.4"/>//equals textsize divides circle diameter
 ```
 
 ##Thanks
-####[CircleImageView](https://github.com/hdodenhof/CircleImageView)
+####[CircleImageView][7]
 
 ## License
 
@@ -172,4 +188,14 @@ compile 'cn.carbs.android:AvatarImageView:1.0.1'
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+
+[1]: https://img.shields.io/badge/Android%20Arsenal-AvatarImageView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3820
+[2]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_imageview_1.0.2.jpg
+[3]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg
+[4]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg
+[5]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg
+[6]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg
+[7]: https://github.com/hdodenhof/CircleImageView
 
