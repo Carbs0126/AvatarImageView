@@ -12,15 +12,6 @@
 <center>
 ![本地图片加载与显示][3]
 </center> 
-<center>
-![网络图片加载与显示][4]
-</center> 
-<center>
-![可添加边框][5]
-</center> 
-<center>
-![可添加边框][6]
-</center> 
 
 ##添加至工程
 ```
@@ -88,7 +79,7 @@ compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 
 ##感谢
-####[CircleImageView][7]
+####[CircleImageView][4]
 ---------------------
 #English
 
@@ -101,15 +92,6 @@ AvatarImageView on Android platform can display circle text or circle image
 </center>
 <center>
 ![load local image resources][3]
-</center>
-<center>
-![load net image resources][4]
-</center>
-<center>
-![add boarder][5]
-</center>
-<center>
-![add boarder][6]
 </center>
 
 ##Main features:
@@ -171,7 +153,7 @@ compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 
 ##Thanks
-####[CircleImageView][7]
+####[CircleImageView][4]
 
 ## License
 
@@ -192,10 +174,7 @@ compile 'cn.carbs.android:AvatarImageView:1.0.2'
 
 
 [1]: https://img.shields.io/badge/Android%20Arsenal-AvatarImageView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3820
-[2]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_imageview_1.0.2.jpg
-[3]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view3.jpg
-[4]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view4.jpg
-[5]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view1.jpg
-[6]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view2.jpg
-[7]: https://github.com/hdodenhof/CircleImageView
+[2]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view_3_in_1.jpg
+[3]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view_2_in_1.jpg
+[4]: https://github.com/hdodenhof/CircleImageView
 
