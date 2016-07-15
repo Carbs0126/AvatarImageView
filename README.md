@@ -14,7 +14,7 @@
 </center> 
 
 ##添加至工程
-```
+```groovy
 compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 
@@ -37,7 +37,7 @@ compile 'cn.carbs.android:AvatarImageView:1.0.2'
 
 ##使用方法：
 (1)设置图片或者文字的方法：
-```
+```java
 AvatarImageView aiv = (AvatarImageView) this.findViewById(R.id.aiv);
 //设置图像：
 aiv.setImageResource(R.drawable.id_014);
@@ -53,29 +53,29 @@ aiv.setTextAndColor("安", AvatarImageView.COLORS[0]);//直接设置颜色，如
 aiv.setTextAndColorSeed("安","安卓");//“安卓”字样作为产生backgroundcolor的seed
 ```
 (2)与Glide的结合：
-```
-            Glide
-                .with(activity)
-                .load(picurl)
-                .centerCrop()
-                .crossFade()
-                .into(aiv);
+```java
+Glide
+    .with(activity)
+    .load(picurl)
+    .centerCrop()
+    .crossFade()
+    .into(aiv);
 ```
 ##添加至工程
 1.添加依赖
-```
+```groovy
 compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 2.layout文件中添加此view
-```
-    <cn.carbs.android.avatarimageview.library.AvatarImageView
-        android:id="@+id/item_avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="5dp"
-        app:aiv_BoarderWidth="2dp"//边框宽度
-        app:aiv_ShowBoarder="false"//是否显示边框
-        app:aiv_TextSizeRatio="0.4"/>//文字大小与原型直径大小的比例
+```xml
+<cn.carbs.android.avatarimageview.library.AvatarImageView
+            android:id="@+id/item_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="5dp"
+            app:aiv_BoarderWidth="2dp"//边框宽度
+            app:aiv_ShowBoarder="false"//是否显示边框
+            app:aiv_TextSizeRatio="0.4"/>//文字大小与原型直径大小的比例
 ```
 
 ##感谢
@@ -110,7 +110,7 @@ not support wrap_content pattern temporarily
 
 ##How to use it:
 (1)How to set image or text
-```
+```java
 AvatarImageView aiv = (AvatarImageView) this.findViewById(R.id.aiv);
 //set image：
 aiv.setImageResource(R.drawable.id_014);
@@ -126,30 +126,30 @@ aiv.setTextAndColor("Android", AvatarImageView.COLORS[0]);//set backgroundcolor 
 aiv.setTextAndColorSeed("Android","Android platform");//"Android platform" as the backgroundcolor seed
 ```
 (2)use with Glide:
-```
-            Glide
-                .with(activity)
-                .load(picurl)
-                .centerCrop()
-                .crossFade()
-                .into(aiv);
+```java
+Glide
+    .with(activity)
+    .load(picurl)
+    .centerCrop()
+    .crossFade()
+    .into(aiv);
 ```
 
 ##add to your project
 1.add dependence
-```
+```groovy
 compile 'cn.carbs.android:AvatarImageView:1.0.2'
 ```
 2.add into xml layout file
-```
-    <cn.carbs.android.avatarimageview.library.AvatarImageView
-        android:id="@+id/item_avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="5dp"
-        app:aiv_BoarderWidth="2dp"//
-        app:aiv_ShowBoarder="false"//
-        app:aiv_TextSizeRatio="0.4"/>//equals textsize divides circle diameter
+```xml
+<cn.carbs.android.avatarimageview.library.AvatarImageView
+            android:id="@+id/item_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="5dp"
+            app:aiv_BoarderWidth="2dp"//
+            app:aiv_ShowBoarder="false"//
+            app:aiv_TextSizeRatio="0.4"/>//equals textsize divides circle diameter
 ```
 
 ##Thanks
