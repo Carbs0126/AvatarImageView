@@ -8,6 +8,7 @@
         <attr name="aiv_TextColor" format="reference|color" />
         <attr name="aiv_BoarderWidth" format="reference|dimension" />
         <attr name="aiv_ShowBoarder" format="reference|boolean" />
+        <attr name="aiv_CornerRadius" format="reference|dimension" />
     </declare-styleable>
     
 </resources>

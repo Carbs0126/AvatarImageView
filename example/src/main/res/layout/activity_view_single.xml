@@ -40,29 +40,48 @@
         android:background="#661111ff">
 
         <LinearLayout
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
-            <cn.carbs.android.avatarimageview.library.AvatarImageView
-                android:id="@+id/aiv_left"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                app:aiv_BoarderWidth="2dp"
-                app:aiv_ShowBoarder="false"
-                app:aiv_TextSizeRatio="0.4" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
 
-            <cn.carbs.android.avatarimageview.library.AvatarImageView
-                android:id="@+id/aiv_right"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                app:aiv_BoarderWidth="2dp"
-                app:aiv_ShowBoarder="true"
-                app:aiv_TextSizeRatio="0.7" />
+                <cn.carbs.android.avatarimageview.library.AvatarImageView
+                    android:id="@+id/aiv_left"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    app:aiv_BoarderWidth="2dp"
+                    app:aiv_ShowBoarder="false"
+                    app:aiv_TextSizeRatio="0.4" />
+
+                <cn.carbs.android.avatarimageview.library.AvatarImageView
+                    android:id="@+id/aiv_right"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    app:aiv_BoarderWidth="2dp"
+                    app:aiv_ShowBoarder="true"
+                    app:aiv_TextSizeRatio="0.7" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp">
+
+                <cn.carbs.android.avatarimageview.library.SquareAvatarImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/id_014"
+                    app:aiv_CornerRadius="16dp" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-
 </RelativeLayout>
