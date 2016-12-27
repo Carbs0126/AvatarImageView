@@ -13,9 +13,13 @@
 ![本地图片加载与显示][3]
 </center> 
 
+<center>
+![圆角矩形][5]
+</center> 
+
 ##添加至工程
 ```groovy
-compile 'cn.carbs.android:AvatarImageView:1.0.2'
+compile 'cn.carbs.android:AvatarImageView:1.0.3'
 ```
 
 ##主要功能：
@@ -28,6 +32,12 @@ compile 'cn.carbs.android:AvatarImageView:1.0.2'
 7. 支持padding；
 8. 多个文字显示具有clip效果
 9. 可以自定义clip放大比例，使用maskratio来调节文字放大的比例
+
+##版本更新：
+###1.0.3 
+1. 添加显示圆角矩形的SquareAvatarImageView，可以设置圆角的半径
+###1.0.2
+1. 添加多个文字的clip效果
 
 ##注意事项：
 暂时不支持wrap_content模式
@@ -64,7 +74,7 @@ Glide
 ##添加至工程
 1.添加依赖
 ```groovy
-compile 'cn.carbs.android:AvatarImageView:1.0.2'
+compile 'cn.carbs.android:AvatarImageView:1.0.3'
 ```
 2.layout文件中添加此view
 ```xml
@@ -177,4 +187,5 @@ compile 'cn.carbs.android:AvatarImageView:1.0.2'
 [2]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view_3_in_1.jpg
 [3]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view_2_in_1.jpg
 [4]: https://github.com/hdodenhof/CircleImageView
+[5]: https://github.com/Carbs0126/Screenshot/blob/master/SquareAvatarImageView.png
 
