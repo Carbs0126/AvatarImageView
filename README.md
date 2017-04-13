@@ -34,6 +34,8 @@ compile 'cn.carbs.android:AvatarImageView:1.0.3'
 9. 可以自定义clip放大比例，使用maskratio来调节文字放大的比例
 
 ##版本更新：
+###1.0.4
+1. 去掉rx库
 ###1.0.3 
 1. 添加显示圆角矩形的SquareAvatarImageView，可以设置圆角的半径
 ###1.0.2
