@@ -150,7 +150,7 @@ Glide
 ##add to your project
 1.add dependence
 ```groovy
-compile 'cn.carbs.android:AvatarImageView:1.0.2'
+compile 'cn.carbs.android:AvatarImageView:1.0.4'
 ```
 2.add into xml layout file
 ```xml
