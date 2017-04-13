@@ -2,8 +2,12 @@ package cn.carbs.android.avatarimageview.example;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +97,7 @@ public class ActivityViewListLocal extends AppCompatActivity {
 			if(aiv == null){
 				return;
 			}
-			AvatarImageView.updateAvatarView(aiv, hero, null, null, hero.file, hero.realName, hero.realName);
+			updateAvatarView(aiv, hero, null, null, hero.file, hero.realName, hero.realName);
 		}
 	}
 
@@ -303,6 +307,71 @@ public class ActivityViewListLocal extends AppCompatActivity {
 		@Override
 		public String toString() {
 			return nickName + "\t" + realName;
+		}
+	}
+
+	//static function to add image to avatarview, using rxandroid
+	public static void updateAvatarView(final AvatarImageView avatarImageView,
+										final Object uniqueIdentifierTag,
+										final LruCache<String, Bitmap> cache,
+										final String cacheKey,
+										final String localImagePath,
+										final String text,
+										final String textSeed) {
+
+		avatarImageView.setTag(uniqueIdentifierTag);
+		Bitmap retBitmap = null;
+		if (cache != null) {
+			retBitmap = cache.get(cacheKey);
+		}
+		if (retBitmap != null) {
+			if ((uniqueIdentifierTag == null && avatarImageView.getTag() == null)
+					|| (uniqueIdentifierTag != null && uniqueIdentifierTag.equals(avatarImageView.getTag()))) {
+				avatarImageView.setBitmap(retBitmap);
+			}
+		} else {
+			Observable
+					.create(new Observable.OnSubscribe<Bitmap>() {
+						@Override
+						public void call(Subscriber<? super Bitmap> subscriber) {
+							Bitmap bitmap = null;
+							if (!TextUtils.isEmpty(localImagePath)) {
+								bitmap = BitmapFactory.decodeFile(localImagePath);
+								if (bitmap != null && cache != null) {
+									cache.put(cacheKey, bitmap);
+								}
+							}
+							subscriber.onNext(bitmap);
+							subscriber.onCompleted();
+						}
+					})
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribeOn(Schedulers.io())
+					.subscribe(new Subscriber<Bitmap>() {
+						@Override
+						public void onCompleted() {
+						}
+
+						@Override
+						public void onError(Throwable e) {
+						}
+
+						@Override
+						public void onNext(Bitmap b) {
+							if ((uniqueIdentifierTag == null && avatarImageView.getTag() == null)
+									|| (uniqueIdentifierTag != null && uniqueIdentifierTag.equals(avatarImageView.getTag()))) {
+								if (b == null) {
+									if (text == null || TextUtils.isEmpty(text.trim())) {
+										avatarImageView.setTextAndColorSeed(" ", " ");
+									} else {
+										avatarImageView.setTextAndColorSeed(text, textSeed);
+									}
+								} else {
+									avatarImageView.setBitmap(b);
+								}
+							}
+						}
+					});
 		}
 	}
 

@@ -19,11 +19,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 public class AvatarImageView extends ImageView {
 
     public static final int[] COLORS = {0xff44bb66,
@@ -229,13 +224,10 @@ public class AvatarImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
         if (mBitmap != null && mType == DEFAULT_TYPE_BITMAP) {
             toDrawBitmap(canvas);
-//            drawBitmap(canvas);
         } else if (mText != null && mType == DEFAULT_TYPE_TEXT) {
             toDrawText(canvas);
-//            drawText(canvas);
         }
         if(mShowBoarder){
             drawBoarder(canvas);
@@ -244,8 +236,10 @@ public class AvatarImageView extends ImageView {
 
     private void toDrawText(Canvas canvas){
         if(mText.length() == 1) {
-            drawText(canvas);//draw text to the view's canvas directly
-        }else{//draw text with clip effect, need to create a bitmap
+            //draw text to the view's canvas directly
+            drawText(canvas);
+        }else{
+            //draw text with clip effect, need to create a bitmap
             drawBitmap(canvas, createClipTextBitmap((int) (mRadius / mTextMaskRatio)), false);
         }
     }
@@ -328,71 +322,6 @@ public class AvatarImageView extends ImageView {
             setDrawable(getContext().getDrawable(resId));
         }else{
             setDrawable(getContext().getResources().getDrawable(resId));
-        }
-    }
-
-    //static function to add image to avatarview, using rxandroid
-    public static void updateAvatarView(final AvatarImageView avatarImageView,
-                                        final Object uniqueIdentifierTag,
-                                        final LruCache<String, Bitmap> cache,
-                                        final String cacheKey,
-                                        final String localImagePath,
-                                        final String text,
-                                        final String textSeed) {
-
-        avatarImageView.setTag(uniqueIdentifierTag);
-        Bitmap retBitmap = null;
-        if (cache != null) {
-            retBitmap = cache.get(cacheKey);
-        }
-        if (retBitmap != null) {
-            if ((uniqueIdentifierTag == null && avatarImageView.getTag() == null)
-                    || (uniqueIdentifierTag != null && uniqueIdentifierTag.equals(avatarImageView.getTag()))) {
-                avatarImageView.setBitmap(retBitmap);
-            }
-        } else {
-            Observable
-                    .create(new Observable.OnSubscribe<Bitmap>() {
-                        @Override
-                        public void call(Subscriber<? super Bitmap> subscriber) {
-                            Bitmap bitmap = null;
-                            if (!TextUtils.isEmpty(localImagePath)) {
-                                bitmap = BitmapFactory.decodeFile(localImagePath);
-                                if (bitmap != null && cache != null) {
-                                    cache.put(cacheKey, bitmap);
-                                }
-                            }
-                            subscriber.onNext(bitmap);
-                            subscriber.onCompleted();
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Subscriber<Bitmap>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onNext(Bitmap b) {
-                            if ((uniqueIdentifierTag == null && avatarImageView.getTag() == null)
-                                    || (uniqueIdentifierTag != null && uniqueIdentifierTag.equals(avatarImageView.getTag()))) {
-                                if (b == null) {
-                                    if (text == null || TextUtils.isEmpty(text.trim())) {
-                                        avatarImageView.setTextAndColorSeed(" ", " ");
-                                    } else {
-                                        avatarImageView.setTextAndColorSeed(text, textSeed);
-                                    }
-                                } else {
-                                    avatarImageView.setBitmap(b);
-                                }
-                            }
-                        }
-                    });
         }
     }
 
