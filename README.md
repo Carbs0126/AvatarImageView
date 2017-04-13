@@ -19,7 +19,7 @@
 
 ##添加至工程
 ```groovy
-compile 'cn.carbs.android:AvatarImageView:1.0.3'
+compile 'cn.carbs.android:AvatarImageView:1.0.4'
 ```
 
 ##主要功能：
