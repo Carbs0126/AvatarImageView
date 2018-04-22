@@ -2,10 +2,10 @@
 ![Android Arsenal][1]
 * [English](#english)
 
-#前言：
+# 前言：
 在做电话本或者其他应用时，显示联系人头像的策略一般是这样的：先判断是否有头像图片，如果有，则直接显示图片；如果没有，则显示联系人的名字的第一个字，将这个文字作为头像，并添加背景颜色。如果设置的文字的长度大于1，则具有clip效果，即超出圆形的部分将被clip掉。
 
-##截图：
+## 截图：
 <center>
 ![1.0.2添加clip文字效果][2]
 </center>
@@ -17,12 +17,12 @@
 ![圆角矩形][5]
 </center> 
 
-##添加至工程
+## 添加至工程
 ```groovy
 compile 'cn.carbs.android:AvatarImageView:1.0.4'
 ```
 
-##主要功能：
+## 主要功能：
 1. 显示圆形图像；
 2. 显示圆形文字；
 3. 文字大小与圆形半径的比例可以调整；
@@ -33,21 +33,21 @@ compile 'cn.carbs.android:AvatarImageView:1.0.4'
 8. 多个文字显示具有clip效果
 9. 可以自定义clip放大比例，使用maskratio来调节文字放大的比例
 
-##版本更新：
-###1.0.4
+## 版本更新：
+### 1.0.4
 1. 去掉rx库
-###1.0.3 
+### 1.0.3 
 1. 添加显示圆角矩形的SquareAvatarImageView，可以设置圆角的半径
-###1.0.2
+### 1.0.2
 1. 添加多个文字的clip效果
 
-##注意事项：
+## 注意事项：
 暂时不支持wrap_content模式
 
-##圆形图像显示原理：
+## 圆形图像显示原理：
 使用shader + matrix的方式显示圆形图片，其中圆形是有shader产生的，而居中的调整方式是由matrix设置的。
 
-##使用方法：
+## 使用方法：
 (1)设置图片或者文字的方法：
 ```java
 AvatarImageView aiv = (AvatarImageView) this.findViewById(R.id.aiv);
@@ -73,7 +73,7 @@ Glide
     .crossFade()
     .into(aiv);
 ```
-##添加至工程
+## 添加至工程
 1.添加依赖
 ```groovy
 compile 'cn.carbs.android:AvatarImageView:1.0.3'
@@ -90,15 +90,15 @@ compile 'cn.carbs.android:AvatarImageView:1.0.3'
             app:aiv_TextSizeRatio="0.4"/>//文字大小与原型直径大小的比例
 ```
 
-##感谢
-####[CircleImageView][4]
+## 感谢
+#### [CircleImageView][4]
 ---------------------
-#English
+# English
 
-##Abstract
+## Abstract
 AvatarImageView on Android platform can display circle text or circle image
 
-##Screenshot
+## Screenshot
 <center>
 ![load local image resources][2]
 </center>
@@ -106,7 +106,7 @@ AvatarImageView on Android platform can display circle text or circle image
 ![load local image resources][3]
 </center>
 
-##Main features:
+## Main features:
 1. show circle image(including bitmap and drawable);
 2. show circle text(can generate a colorful background for text);
 3. the textsize can be modified according to the ratio of AvatarImageView's width;
@@ -117,10 +117,10 @@ AvatarImageView on Android platform can display circle text or circle image
 8. have clip effect if the text's length > 1
 9. can set the clip effect's amplify ratio by setting mask ratio
 
-##Attention
+## Attention
 not support wrap_content pattern temporarily
 
-##How to use it:
+## How to use it:
 (1)How to set image or text
 ```java
 AvatarImageView aiv = (AvatarImageView) this.findViewById(R.id.aiv);
@@ -147,7 +147,7 @@ Glide
     .into(aiv);
 ```
 
-##add to your project
+## add to your project
 1.add dependence
 ```groovy
 compile 'cn.carbs.android:AvatarImageView:1.0.4'
@@ -164,8 +164,8 @@ compile 'cn.carbs.android:AvatarImageView:1.0.4'
             app:aiv_TextSizeRatio="0.4"/>//equals textsize divides circle diameter
 ```
 
-##Thanks
-####[CircleImageView][4]
+## Thanks
+#### [CircleImageView][4]
 
 ## License
 
