@@ -1,21 +1,16 @@
 # AvatarImageView
-![Android Arsenal][1]
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AvatarImageView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3820)
 * [English](#english)
 
 # 前言：
 在做电话本或者其他应用时，显示联系人头像的策略一般是这样的：先判断是否有头像图片，如果有，则直接显示图片；如果没有，则显示联系人的名字的第一个字，将这个文字作为头像，并添加背景颜色。如果设置的文字的长度大于1，则具有clip效果，即超出圆形的部分将被clip掉。
 
 ## 截图：
-<center>
-![1.0.2添加clip文字效果][2]
-</center>
-<center>
-![本地图片加载与显示][3]
-</center> 
+![hint2][2]<br>
 
-<center>
-![圆角矩形][5]
-</center> 
+![hint3][3]<br>
+ 
+![hint5][5]<br> 
 
 ## 添加至工程
 ```groovy
@@ -185,7 +180,6 @@ compile 'cn.carbs.android:AvatarImageView:1.0.4'
 
 
 
-[1]: https://img.shields.io/badge/Android%20Arsenal-AvatarImageView-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3820
 [2]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view_3_in_1.jpg
 [3]: https://github.com/Carbs0126/Screenshot/blob/master/avatar_image_view_2_in_1.jpg
 [4]: https://github.com/hdodenhof/CircleImageView
